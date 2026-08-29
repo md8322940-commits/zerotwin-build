@@ -1,7 +1,9 @@
-shushobulat
 name: Build ESP8266 Binary
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -13,7 +15,7 @@ jobs:
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v2
 
-      - name: Install ESP8266 Core & Libraries
+      - name: Install ESP8266 Core and Libraries
         run: |
           arduino-cli core update-index --additional-urls https://arduino.esp8266.com/stable/package_esp8266com_index.json
           arduino-cli core install esp8266:esp8266 --additional-urls https://arduino.esp8266.com/stable/package_esp8266com_index.json
@@ -23,7 +25,7 @@ jobs:
       - name: Compile Code
         run: |
           mkdir -p build
-          arduino-cli compile --fqbn esp8266:esp8266:generic --output-dir ./build ZeroTwin.ino
+          arduino-cli compile --fqbn esp8266:esp8266:nodemcuv2 --output-dir ./build ZeroTwin.ino
 
       - name: Upload Binary
         uses: actions/upload-artifact@v4
