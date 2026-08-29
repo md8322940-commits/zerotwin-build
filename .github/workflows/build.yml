@@ -23,14 +23,14 @@ jobs:
           arduino-cli lib install "Adafruit GFX Library"
           arduino-cli lib install "Adafruit SSD1306"
 
-      - name: Create working directory and copy sketch
+      - name: Prepare Sketch Directory
         run: |
-          mkdir -p build/zerotwin-build
-          cp *.ino build/zerotwin-build/ || true
+          mkdir -p build_sketch/zerotwin-build
+          cp ZeroTwin.ino build_sketch/zerotwin-build/zerotwin-build.ino
 
       - name: Compile Sketch
         run: |
-          arduino-cli compile --fqbn esp8266:esp8266:nodemcuv2 --output-dir ./out build/zerotwin-build
+          arduino-cli compile --fqbn esp8266:esp8266:nodemcuv2 --output-dir ./out build_sketch/zerotwin-build
 
       - name: Upload Binary
         uses: actions/upload-artifact@v4
